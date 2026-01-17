@@ -110,13 +110,17 @@ const STAGE_DEFINITIONS = [
     description: 'Greeting and rapport building',
     startPercent: 0,      // Start of call
     endPercent: 3.5,      // Extended to include rapport building (~first minute)
-    score: 7,
+    score: 8,
     status: 'good',
     analysis: {
       strengths: [
         {
           text: 'Customer addressed by first name ("Hey, Luis")',
           citations: ['Hey, Luis'],
+        },
+        {
+          text: 'Context-appropriate greeting for follow-up visit (no awkward re-introduction)',
+          citations: ['Got you all done'],
         },
         {
           text: 'Explained reason for delay proactively',
@@ -137,11 +141,7 @@ const STAGE_DEFINITIONS = [
       ],
       gaps: [
         {
-          text: 'No formal company introduction',
-          citations: [], // No evidence - this is a gap
-        },
-        {
-          text: 'No clear statement of purpose for the call',
+          text: 'Could have briefly recapped what was done during the service visit',
           citations: [], // No evidence - this is a gap
         },
       ],
