@@ -76,17 +76,8 @@ function App() {
               <img src={logoNoso} alt="NOSO Logo" className="logo-icon" />
               NOSO Call Analysis
             </div>
-            <span className="badge badge-dark">Post-Repair Sales Consultation</span>
           </div>
           <div className="header-meta">
-            <div className="meta-item">
-              <span className="label">Duration:</span>
-              <span className="value">{formatMinutes(stats?.callDuration)} min</span>
-            </div>
-            <div className="meta-item">
-              <span className="label">Accuracy:</span>
-              <span className="value">{stats?.avgConfidence}%</span>
-            </div>
             <div className="meta-item">
               <span className="label">Score:</span>
               <span className="value" style={{ color: '#10b981' }}>
