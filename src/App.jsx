@@ -346,7 +346,10 @@ function App() {
                   <span>{CALL_ASSESSMENT.callContext.priorVisit}</span> <strong>{CALL_ASSESSMENT.callContext.priorVisitNote}</strong>
                 </div>
                 <div className="context-detail">
-                  <span>Repair Cost:</span> <strong>{CALL_ASSESSMENT.callContext.repairCost}</strong>
+                  <span>Repair Payment:</span> <strong>{CALL_ASSESSMENT.callContext.repairPayment}</strong>
+                </div>
+                <div className="context-detail">
+                  <span>Commitment:</span> <strong style={{color: '#dc2626'}}>None (declined)</strong>
                 </div>
                 <div className="context-detail">
                   <span>Customer Concern:</span> <strong>{CALL_ASSESSMENT.callContext.customerConcern}</strong>
@@ -374,18 +377,18 @@ function App() {
                 </ul>
               </div>
               <div className="context-card highlight">
-                <h4>🤝 Closing Structure</h4>
+                <h4>🤝 Call Outcome</h4>
                 <div className="closing-detail">
-                  <span>Deposit Collected:</span> <strong style={{ color: 'var(--color-success)' }}>{CALL_ASSESSMENT.closingStructure.deposit}</strong>
+                  <span>Repair Payment:</span> <strong>{CALL_ASSESSMENT.closingStructure.repairPayment}</strong>
                 </div>
                 <div className="closing-detail">
-                  <span>Repair Waived:</span> <strong>{CALL_ASSESSMENT.closingStructure.repairWaived}</strong>
+                  <span>Commitment:</span> <strong style={{ color: '#dc2626' }}>{CALL_ASSESSMENT.closingStructure.commitment}</strong>
                 </div>
                 <div className="closing-detail">
-                  <span>Cancel Window:</span> <strong>{CALL_ASSESSMENT.closingStructure.cancellationWindow}</strong>
+                  <span>Credit Offer:</span> <strong>{CALL_ASSESSMENT.closingStructure.creditOffer}</strong>
                 </div>
                 <div className="closing-detail">
-                  <span>Estimates Sent:</span> <strong>{CALL_ASSESSMENT.closingStructure.estimatesSent}</strong>
+                  <span>Next Step:</span> <strong>{CALL_ASSESSMENT.closingStructure.nextStep}</strong>
                 </div>
               </div>
             </div>
@@ -439,12 +442,13 @@ function App() {
           <div className="outcomes-strip">
             <span className="strip-label">Outcomes:</span>
             <div className="outcome-badges">
-              <span className="outcome-badge win">✓ Deposit $1,000</span>
               <span className="outcome-badge win">✓ Narrowed 4→2</span>
-              <span className="outcome-badge win">✓ Rebates $5,800+</span>
-              <span className="outcome-badge win">✓ Waived $1,900</span>
+              <span className="outcome-badge win">✓ Rebates Explained</span>
+              <span className="outcome-badge win">✓ Estimates Emailed</span>
+              <span className="outcome-badge win">✓ Repair Paid ~$1,009</span>
+              <span className="outcome-badge miss">✗ No Commitment</span>
+              <span className="outcome-badge miss">✗ No Deposit</span>
               <span className="outcome-badge miss">✗ No Maintenance Plan</span>
-              <span className="outcome-badge miss">✗ No Referral Ask</span>
             </div>
           </div>
         </section>

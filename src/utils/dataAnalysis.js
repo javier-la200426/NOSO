@@ -335,7 +335,7 @@ const STAGE_DEFINITIONS = [
     description: 'Wrapping up the call',
     startPercent: 82,
     endPercent: 100,
-    score: 6,
+    score: 5,
     status: 'partial',
     analysis: {
       strengths: [
@@ -348,30 +348,34 @@ const STAGE_DEFINITIONS = [
           citations: ['60 months', '5 year', '12 payments', 'no interest'],
         },
         {
-          text: 'Referenced 3-day right to cancel for reassurance',
-          citations: ['three day right to cancel', 'reputable'],
-        },
-        {
           text: 'Offered to clean up and email estimates (Bryant and Bosch)',
           citations: ['pretty his estimates up', 'send it to you', 'Bryant and the Bosch'],
         },
         {
-          text: 'Secured $1,000 down payment successfully',
-          citations: ['$1,000', '1,000 for today', 'MasterCard'],
+          text: 'Offered 15-day credit window for repair payment toward replacement',
+          citations: ['within 15 days I will completely credit that back'],
+        },
+        {
+          text: 'Professional handling of customer\'s deferral',
+          citations: ['Absolutely'],
         },
       ],
       gaps: [
         {
-          text: 'Pushed for commitment after customer wanted to consult wife (worked, but borderline)',
-          citations: ['speak with my wife', 'won\'t do that today', '$1,000 for today'],
+          text: 'Failed to secure commitment - customer explicitly declined',
+          citations: ['No, we won\'t do that today', 'speak with my wife'],
+        },
+        {
+          text: 'No deposit obtained (repair payment only, not commitment)',
+          citations: ['won\'t do that today', 'Just send me'],
+        },
+        {
+          text: 'No follow-up meeting scheduled with customer + wife',
+          citations: ['speak with my wife', 'discuss this with my wife'],
         },
         {
           text: 'No formal thank you expressed',
           citations: [], // No evidence - this is a gap
-        },
-        {
-          text: "Didn't offer to include wife in follow-up communication",
-          citations: ['speak with my wife', 'discuss this with my wife'],
         },
       ],
       keyQuote: "No, we won't do that today. Just send me the, I'll talk to her and then we'll make a decision.",
@@ -464,17 +468,18 @@ export const getConfidenceLevel = (confidence) => {
 // Overall call assessment
 export const CALL_ASSESSMENT = {
   callType: {
-    primary: 'Follow-up sales consultation after diagnostic/repair visit',
-    description: 'Originally a service call for HVAC issues (low efficiency, mold concerns), converted to equipment replacement consultation after diagnostic visit revealed system age and "bandaid" repair limitations.',
+    primary: 'Follow-up sales consultation after repair visit',
+    description: 'Originally a diagnostic/repair visit that evolved into an equipment replacement consultation for heat pump installation.',
   },
-  overallScore: 7.8,
-  summary: "Highly effective sales consultation following a diagnostic visit. Tech converted a $1,900 repair into a $1,000 deposit toward a ~$22k heat pump system. Customer's main concern (noise) was addressed with inverter technology and Bosch upward-venting option. Successfully secured commitment despite customer wanting to consult wife first.",
+  overallScore: 7.2,
+  summary: "Strong sales consultation that generated genuine customer interest, but did NOT result in a commitment. Tech attempted to convert the repair into a deposit, but customer explicitly declined: 'No, we won't do that today.' Customer paid for the repair only and will discuss heat pump options with wife before deciding. Tech successfully narrowed options from 4 to 2 (Bryant & Bosch heat pumps) and will send estimates via email.",
   callContext: {
     priorVisit: 'Diagnostic + refrigerant recharge:',
     priorVisitNote: '"bandaid" fix',
-    repairCost: '$1,900',
-    depositCollected: '$1,000',
-    repairWaived: true,
+    repairPayment: '~$1,009 (collected for repair)',
+    repairPaymentNote: 'Customer paid for repair; tech offered 15-day credit toward replacement if signed',
+    depositCollected: false,
+    commitmentObtained: false,
     customerConcern: 'Noise from current closet unit',
   },
   optionsPresented: [
@@ -483,6 +488,16 @@ export const CALL_ASSESSMENT = {
     { name: 'Bryant heat pump', type: 'Heat pump', status: 'finalist (best defrost)' },
     { name: 'Bosch heat pump', type: 'Heat pump', status: 'finalist (preferred - vents upward)' },
   ],
+  verifiedPricing: {
+    note: 'Exact prices shown on screen, not verbalized. Pricing inferred from financing discussion:',
+    estimatedSystemPrice: '~$26,422',
+    evidence: [
+      { line: 223, quote: '"$18,000 down... remaining balance of $8,422"', calc: '$18,000 + $8,422 = $26,422' },
+      { line: 219, quote: '"A little bit over $2,000/month" for 12 payments', calc: '~$24,000+ (no-interest path)' },
+      { line: 209, quote: '"5 year 335"', calc: '$335 × 60 = $20,100 (includes 5.99% interest)' },
+    ],
+    monthlyPayment: '$335/mo for 60 months @ 5.99%',
+  },
   rebatesExplained: {
     copperLineReuse: '$1,800',
     svce: '$2,500',
@@ -491,23 +506,27 @@ export const CALL_ASSESSMENT = {
     ductSealingPromo: 'Free (included for HERS test)',
   },
   closingStructure: {
-    deposit: '$1,000',
-    repairWaived: '$1,900 repair becomes complimentary',
-    cancellationWindow: '3-day right to cancel',
-    creditWindow: '15 days to credit toward purchase',
-    estimatesSent: 'Bryant and Bosch only (gas options eliminated)',
+    repairPayment: '~$1,009 (diagnostic + refrigerant recharge)',
+    commitment: 'None - customer explicitly declined ("No, we won\'t do that today")',
+    creditOffer: 'Tech offered 15-day window to credit repair toward replacement',
+    nextStep: 'Estimates emailed (Bryant & Bosch); customer to discuss with wife',
+    contractSigned: false,
   },
   topStrengths: [
     'Exceptional product knowledge across multiple equipment types',
     'Adaptive selling - built custom Bosch option for upward airflow preference',
     'Thorough rebate education ($5,800+ in potential savings)',
     'Addressed noise concern with inverter technology',
-    'Clever closing: converted hesitation into $1,000 commitment',
+    'Successfully narrowed 4 options to 2 customer-preferred heat pumps',
+    'Professional handling of customer\'s deferral',
   ],
   areasForImprovement: [
+    'Failed to secure commitment or deposit',
+    'Customer declined "waive repair for deposit" offer',
+    'No follow-up meeting scheduled with customer + wife',
+    'Could have offered to include wife on a call',
     'No formal company introduction',
     'Maintenance plan mentioned only once (no pricing/details)',
-    'Could have offered to include wife on follow-up email/call',
     'No referral ask',
   ],
   salesInsights: {
@@ -517,13 +536,14 @@ export const CALL_ASSESSMENT = {
       'Financing options - 12mo/60mo/120mo/180mo terms presented',
       'Noise concern addressed with inverter tech + grill swap option',
       'Built custom Bosch option based on airflow preference',
-      'Converted $1,900 repair into deposit opportunity',
+      'Offered 15-day credit window for repair payment',
     ],
     missed: [
+      'Closing the sale - customer explicitly declined commitment',
+      'Scheduling follow-up meeting with customer + wife',
       'Full maintenance plan presentation',
-      'Wife involvement in follow-up',
-      'Referral ask',
       'Timeline urgency (rebate deadlines)',
+      'Referral ask',
     ],
   },
 };
