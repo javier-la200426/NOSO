@@ -201,8 +201,8 @@ const STAGE_DEFINITIONS = [
           citations: ['Who is this', 'Michelangelo', 'I love cats', 'two cats'],
         },
         {
-          text: 'Presented 4 comprehensive equipment options',
-          citations: ['total of four', 'like for like', 'gas heating', 'heat pump'],
+          text: 'Presented 4 equipment options: like-for-like, gas upgrade, and 2 heat pumps',
+          citations: ['total of four that I built', 'replace like for like', 'maintaining gas heating', 'two different types of heat pumps'],
         },
         {
           text: 'Explained gas phase-out context',
@@ -220,8 +220,24 @@ const STAGE_DEFINITIONS = [
           text: 'Explained R32 refrigerant benefits',
           citations: ['R32', 'refrigerant got phased out', 'better for the environment'],
         },
+        {
+          text: 'Used customer\'s mini-split to explain inverter technology',
+          citations: ['saw your mini split', 'mimics that technology', 'same type of inverter technology', 'ramps up and ramps down'],
+        },
+        {
+          text: 'Explained SVCE rebate ($2,500)',
+          citations: ['Silicon Valley Clean Energy', '$2,500 off towards heat pump'],
+        },
+        {
+          text: 'Explained Tech rebate ($1,500)',
+          citations: ['tech which is one that just barely got reintroduced', 'removing both a furnace and AC'],
+        },
       ],
       gaps: [
+        {
+          text: 'Maintenance plan mentioned only once, very briefly (no pricing, no details)',
+          citations: ['maintenance program', 'match the manufacturer warranties'],
+        },
         {
           text: 'Very lengthy explanation may be overwhelming',
           citations: ['really lengthy section'],
@@ -246,32 +262,20 @@ const STAGE_DEFINITIONS = [
     analysis: {
       strengths: [
         {
-          text: 'Explained inverter technology with mini-split comparison',
-          citations: ['inverter', 'mini split', 'ductless', 'ramps up and ramps down'],
+          text: 'Addressed attic vs closet installation trade-offs',
+          citations: ['attic package', 'keep it in the closet', 'moving it to the attic', 'full closet'],
         },
         {
           text: 'Connected features to customer concerns (noise reduction)',
-          citations: ['noise', 'quieter', 'much, much, much, much better', '20% quieter'],
-        },
-        {
-          text: 'Explained SVCE rebate ($2,500)',
-          citations: ['Silicon Valley Clean Energy', '2,500 off'],
-        },
-        {
-          text: 'Explained Tech rebate ($1,500)',
-          citations: ['tech', '1500 off', 'removing both a furnace and AC'],
+          citations: ['noise', 'quieter', '20% quieter', 'makes it a lot quieter'],
         },
         {
           text: 'Created custom Bosch option based on customer preference',
-          citations: ['Bosch', 'airflow up', 'modify this estimate'],
+          citations: ['Bosch', 'highly reviewed from technicians', 'very reliable'],
         },
         {
           text: 'Explained Energy Star tax credit ($1-2K)',
-          citations: ['Energy Star', 'tax cut rebate', 'thousand dollars or $2,000'],
-        },
-        {
-          text: 'Addressed attic vs closet installation trade-offs',
-          citations: ['attic', 'closet', 'serviceability', 'efficiency'],
+          citations: ['Energy Star', 'tax cut rebate', 'qualify you for one further rebate'],
         },
       ],
       gaps: [
@@ -284,40 +288,44 @@ const STAGE_DEFINITIONS = [
     },
   },
   {
-    id: 'maintenance',
-    name: 'Maintenance Plan',
-    icon: '🔧',
-    description: 'Service agreement offerings',
+    id: 'decision',
+    name: 'Customer Decision & Financing',
+    icon: '💳',
+    description: 'Customer preference and payment options',
     startPercent: 75,
     endPercent: 82,
-    score: 5,
-    status: 'missed',
+    score: 8,
+    status: 'good',
     analysis: {
       strengths: [
         {
-          text: 'Tied maintenance to warranty matching',
-          citations: ['maintenance program', 'match the manufacturer warranties', '10 years parts'],
+          text: 'Customer clearly stated preference: heat pump over gas',
+          citations: ['interested on the heat pump', 'not interested on the gas', 'these two'],
+        },
+        {
+          text: 'Explained installation timeline (2-3 days for heat pump)',
+          citations: ['two or three days', 'lot of work that goes into a heat pump'],
+        },
+        {
+          text: 'Presented multiple financing options',
+          citations: ['120 month', '180', '12 months, no interest', 'pay it off in 12 months'],
+        },
+        {
+          text: 'Mentioned duct sealing promotion',
+          citations: ['duct sealing', 'promotion'],
         },
       ],
       gaps: [
         {
-          text: 'Maintenance plan mentioned only once, briefly',
-          citations: [], // Observation - mentioned once at line 71
+          text: 'Maintenance plan NOT discussed in this section (only briefly mentioned earlier at 28%)',
+          citations: [], // Key finding - maintenance was skipped
         },
         {
-          text: 'No explanation of what maintenance plan includes',
-          citations: [], // No evidence - this is a gap
-        },
-        {
-          text: 'No pricing presented for maintenance plan',
-          citations: [], // No evidence - this is a gap
-        },
-        {
-          text: 'No follow-up or soft close on maintenance offer',
-          citations: [], // No evidence - this is a gap
+          text: 'Could have revisited maintenance plan when discussing warranties',
+          citations: [], // Missed opportunity
         },
       ],
-      keyQuote: "If you're on this maintenance program with us, we actually completely match the manufacturer warranties.",
+      keyQuote: "I'm not interested on the gas... I would be interested on the heat pump. Maybe these two.",
     },
   },
   {
@@ -332,30 +340,30 @@ const STAGE_DEFINITIONS = [
     analysis: {
       strengths: [
         {
-          text: 'Customer expressed interest in heat pump options',
-          citations: ['interested on the heat pump', 'these two', 'not interested on the gas'],
+          text: 'Customer confirmed value proposition (quieter, more efficient, no gas leaks)',
+          citations: ['quieter and more efficient', 'not having gas leaks'],
         },
         {
-          text: 'Presented multiple financing options',
-          citations: ['financing', '120 month', '180', '12 months, no interest', '60 months'],
+          text: 'Detailed financing breakdown (60mo @ 5.99%, 12mo no interest)',
+          citations: ['60 months', '5 year', '12 payments', 'no interest'],
         },
         {
           text: 'Referenced 3-day right to cancel for reassurance',
-          citations: ['three day right to cancel'],
+          citations: ['three day right to cancel', 'reputable'],
         },
         {
-          text: 'Offered to clean up and email estimates',
-          citations: ['pretty his estimates up', 'send it to you'],
+          text: 'Offered to clean up and email estimates (Bryant and Bosch)',
+          citations: ['pretty his estimates up', 'send it to you', 'Bryant and the Bosch'],
         },
         {
-          text: 'Secured $1,000 down payment',
-          citations: ['$1,000', 'thousand', 'down payment'],
+          text: 'Secured $1,000 down payment successfully',
+          citations: ['$1,000', '1,000 for today', 'MasterCard'],
         },
       ],
       gaps: [
         {
-          text: 'Persisted after customer said "no" to signing today',
-          citations: ['won\'t do that today', 'talk to her', 'make a decision'],
+          text: 'Pushed for commitment after customer wanted to consult wife (worked, but borderline)',
+          citations: ['speak with my wife', 'won\'t do that today', '$1,000 for today'],
         },
         {
           text: 'No formal thank you expressed',
@@ -472,9 +480,9 @@ export const CALL_ASSESSMENT = {
   ],
   salesInsights: {
     taken: [
-      'Equipment upgrade pitch - 4 options narrowed to 2',
-      'Rebate education - $4,000+ explained',
-      'Financing options - multiple terms presented',
+      'Equipment upgrade pitch - presented 4 options: (1) like-for-like replacement, (2) gas heating upgrade, (3) heat pump standard, (4) heat pump premium → Customer narrowed to 2 heat pump options (rejected gas)',
+      'Rebate education - $4,000+ explained (SVCE $2,500 + Tech $1,500 + Energy Star $1-2K)',
+      'Financing options - multiple terms presented (12mo 0%, 60mo, 120mo, 180mo)',
       'Addressed noise concerns with inverter tech',
       'Built custom option (Bosch) for customer preference',
     ],
