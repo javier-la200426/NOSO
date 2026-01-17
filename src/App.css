@@ -1000,6 +1000,149 @@
    END CITATION SYSTEM STYLES
    ============================================ */
 
+/* ============================================
+   CALL CONTEXT GRID STYLES
+   ============================================ */
+.call-context-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+.context-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+}
+
+.context-card.highlight {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.1), rgba(13, 148, 136, 0.05));
+  border-color: var(--color-primary);
+}
+
+.context-card h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+}
+
+.context-card p {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.context-detail,
+.closing-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.context-detail:last-child,
+.closing-detail:last-child {
+  border-bottom: none;
+}
+
+.context-detail span,
+.closing-detail span {
+  color: var(--color-text-muted);
+}
+
+.context-detail strong,
+.closing-detail strong {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.options-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.options-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.options-list li:last-child {
+  border-bottom: none;
+}
+
+.options-list li strong {
+  color: var(--color-text);
+}
+
+.options-list li.finalist strong {
+  color: var(--color-success);
+}
+
+.options-list li.rejected strong {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.option-status {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  max-width: 60%;
+  text-align: right;
+}
+
+.options-list li.finalist .option-status {
+  color: var(--color-success);
+}
+
+.rebates-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rebates-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: 3px 0;
+}
+
+.rebates-list li span {
+  color: var(--color-text-muted);
+}
+
+.rebates-list li strong {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+  .call-context-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .call-context-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   END CALL CONTEXT GRID STYLES
+   ============================================ */
+
 /* Responsive */
 @media (max-width: 640px) {
   .header-meta {
