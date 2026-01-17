@@ -103,20 +103,23 @@ function App() {
           <div className="stat-card">
             <div className="stat-label">📊 Total Sentences</div>
             <div className="stat-value">{stats?.totalSentences}</div>
-            <div className="stat-detail">Analyzed from transcript</div>
           </div>
 
           <div className="stat-card">
             <div className="stat-label">⏱️ Call Duration</div>
-            <div className="stat-value">{formatMinutes(stats?.callDuration)}</div>
-            <div className="stat-detail">minutes total</div>
+            <div className="stat-value">
+              {formatMinutes(stats?.callDuration)}
+              <span className="stat-unit">min</span>
+            </div>
           </div>
 
           <div className="stat-card">
             <div className="stat-label">🎯 Transcription Quality</div>
-            <div className="stat-value">{stats?.avgConfidence}%</div>
-            <div className="stat-detail">
-              {stats?.lowConfidenceCount} low-confidence segments
+            <div
+              className="stat-value has-tooltip"
+              data-tooltip="Average of all sentence confidence scores (0.0-1.0) from AssemblyAI, showing how sure the model is that the transcript is correct. Above 85% is high accuracy."
+            >
+              {stats?.avgConfidence}%
             </div>
           </div>
 

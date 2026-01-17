@@ -161,6 +161,48 @@
   margin-top: var(--space-1);
 }
 
+.stat-unit {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  margin-left: var(--space-1);
+}
+
+.has-tooltip {
+  cursor: help;
+  position: relative;
+}
+
+.has-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-family: var(--font-sans);
+  line-height: 1.4;
+  white-space: normal;
+  width: 250px;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  z-index: 100;
+  margin-top: var(--space-2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.has-tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Talk Time Bar */
 .talk-time-card {
   grid-column: span 2;
@@ -588,6 +630,12 @@
   gap: var(--space-2);
 }
 
+.summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .summary-list li {
   color: var(--text-secondary);
   font-size: 0.875rem;
@@ -597,7 +645,7 @@
 }
 
 .summary-list li::before {
-  content: '→';
+  content: '•';
   position: absolute;
   left: 0;
   color: var(--text-tertiary);
