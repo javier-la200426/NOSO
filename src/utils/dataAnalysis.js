@@ -222,7 +222,7 @@ const STAGE_DEFINITIONS = [
     name: 'Closing & Thank You',
     icon: '🤝',
     description: 'Wrapping up the call',
-    startPercent: 91,
+    startPercent: 83,
     endPercent: 100,
     score: 6,
     status: 'partial',
