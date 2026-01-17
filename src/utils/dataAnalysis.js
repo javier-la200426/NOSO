@@ -472,7 +472,7 @@ export const CALL_ASSESSMENT = {
     description: 'Originally a diagnostic/repair visit that evolved into an equipment replacement consultation for heat pump installation.',
   },
   overallScore: 7.2,
-  summary: "Strong sales consultation that generated genuine customer interest, but did NOT result in a commitment. Tech attempted to convert the repair into a deposit, but customer explicitly declined: 'No, we won't do that today.' Customer paid for the repair only and will discuss heat pump options with wife before deciding. Tech successfully narrowed options from 4 to 2 (Bryant & Bosch heat pumps) and will send estimates via email.",
+  summary: "Strong sales consultation that generated genuine interest but no commitment. Tech attempted to convert the repair into a deposit, but customer declined: 'No, we won't do that today.' Customer paid for the repair only and will discuss options with wife. Tech narrowed choices to 2 heat pumps (Bryant & Bosch) and will email estimates.",
   callContext: {
     priorVisit: 'Diagnostic + refrigerant recharge:',
     priorVisitNote: '"bandaid" fix',

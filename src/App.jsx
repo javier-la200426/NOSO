@@ -587,7 +587,7 @@ function App() {
           {/* Analysis Panel */}
           <section className="section">
             <div className="section-header">
-              <h3 className="section-title">🔍 Analysis</h3>
+              <h3 className="section-title">🔍 Analysis <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', fontWeight: 'normal' }}>(click bullet points)</span></h3>
             </div>
             <div className="section-body">
               <div className="analysis-panel">
