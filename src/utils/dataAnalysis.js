@@ -100,6 +100,7 @@ export const countKeywords = (sentences) => {
 
 // Stage definitions with percentage-based boundaries (calculated from sentences data)
 // Percentages represent approximate positions in the call timeline
+// Each analysis item now includes citations array with text patterns to match in transcript
 const STAGE_DEFINITIONS = [
   {
     id: 'introduction',
@@ -112,14 +113,32 @@ const STAGE_DEFINITIONS = [
     status: 'partial',
     analysis: {
       strengths: [
-        'Customer addressed by first name ("Hey, Luis")',
-        'Warm, conversational tone throughout',
-        'Natural rapport building (cats discussion, work-from-home chat)',
+        {
+          text: 'Customer addressed by first name ("Hey, Luis")',
+          citations: ['Hey, Luis'],
+        },
+        {
+          text: 'Warm, conversational tone throughout',
+          citations: ['Got you all done', 'built all your equipment options'],
+        },
+        {
+          text: 'Natural rapport building (cats discussion, work-from-home chat)',
+          citations: ['work from home', 'cats', 'I know this is not like a sales call'],
+        },
       ],
       gaps: [
-        'No formal company introduction',
-        'No clear statement of purpose for the call',
-        'Jumped directly into technical discussion',
+        {
+          text: 'No formal company introduction',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'No clear statement of purpose for the call',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'Jumped directly into technical discussion',
+          citations: ['built all your equipment options when I was out there'],
+        },
       ],
       keyQuote: "Hey, Luis. Got you all done. The reason that took so long is I just kind of also built all your equipment options when I was out there too.",
     },
@@ -135,14 +154,32 @@ const STAGE_DEFINITIONS = [
     status: 'good',
     analysis: {
       strengths: [
-        'Specific technical measurements shared (temperature differentials)',
-        'Honest about repair being temporary ("bandaid")',
-        'Clear timeline expectations (1-2 months)',
-        'Mentioned mold issues as additional concern',
+        {
+          text: 'Specific technical measurements shared (temperature differentials)',
+          citations: ['temperature differential', 'degrees coming out', '19 degrees'],
+        },
+        {
+          text: 'Honest about repair being temporary ("bandaid")',
+          citations: ['bandaid', 'temporary'],
+        },
+        {
+          text: 'Clear timeline expectations (1-2 months)',
+          citations: ['month to two months', 'efficiency drop again'],
+        },
+        {
+          text: 'Mentioned mold issues as additional concern',
+          citations: ['mold', 'mold issues'],
+        },
       ],
       gaps: [
-        "Didn't ask customer about symptoms or history",
-        'Assumed customer understood technical terms',
+        {
+          text: "Didn't ask customer about symptoms or history",
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'Assumed customer understood technical terms',
+          citations: ['refrigerant', 'R32', 'inverter'],
+        },
       ],
       keyQuote: "It is old... when it comes to just what to expect here in the future, I would say month to two months. I think we'll start to see the efficiency drop again. And we still have those mold issues.",
     },
@@ -158,15 +195,36 @@ const STAGE_DEFINITIONS = [
     status: 'excellent',
     analysis: {
       strengths: [
-        'Presented 4 comprehensive equipment options',
-        'Explained technical concepts (R32 refrigerant, inverter technology)',
-        'Adapted in real-time to customer preferences',
-        'Used relatable analogies (mini-split comparison)',
-        'Honest about trade-offs (attic = less efficient but more space)',
+        {
+          text: 'Presented 4 comprehensive equipment options',
+          citations: ['four options', 'Option one', 'option two', 'option three', 'option four'],
+        },
+        {
+          text: 'Explained technical concepts (R32 refrigerant, inverter technology)',
+          citations: ['R32', 'inverter', 'refrigerant'],
+        },
+        {
+          text: 'Adapted in real-time to customer preferences',
+          citations: ['If you want, I can build you a custom option', 'Bosch'],
+        },
+        {
+          text: 'Used relatable analogies (mini-split comparison)',
+          citations: ['mini split', 'ductless'],
+        },
+        {
+          text: 'Honest about trade-offs (attic = less efficient but more space)',
+          citations: ['attic', 'less efficient', 'garage space'],
+        },
       ],
       gaps: [
-        'Potentially overwhelming amount of information',
-        'Talk time heavily technician-dominated (89%)',
+        {
+          text: 'Potentially overwhelming amount of information',
+          citations: ['a lot of information', 'lot to take in'],
+        },
+        {
+          text: 'Talk time heavily technician-dominated (89%)',
+          citations: [], // This is a calculated metric, not a quote
+        },
       ],
       keyQuote: "Heat pumps actually just got introduced some more rebates. So even though those are the best possible system to install, weirdly enough, those are actually getting quite affordable at the moment.",
     },
@@ -182,14 +240,32 @@ const STAGE_DEFINITIONS = [
     status: 'excellent',
     analysis: {
       strengths: [
-        'Education-based selling, not pushy',
-        'Connected features to customer concerns (noise → inverter)',
-        'Proactively addressed cost barriers with rebates/financing',
-        'Successfully narrowed from 4 options to 2',
-        'Explained rebates: SVCE ($2,500), Tech ($1,500), Energy Star ($1-2K)',
+        {
+          text: 'Education-based selling, not pushy',
+          citations: ['I\'m going to go over with you', 'let me explain', 'make sense'],
+        },
+        {
+          text: 'Connected features to customer concerns (noise → inverter)',
+          citations: ['noise', 'quiet', 'inverter', 'decibels'],
+        },
+        {
+          text: 'Proactively addressed cost barriers with rebates/financing',
+          citations: ['rebate', 'financing', 'affordable', 'monthly payment'],
+        },
+        {
+          text: 'Successfully narrowed from 4 options to 2',
+          citations: ['these two', 'not interested on the gas', 'heat pump'],
+        },
+        {
+          text: 'Explained rebates: SVCE ($2,500), Tech ($1,500), Energy Star ($1-2K)',
+          citations: ['SVCE', '2500', '1500', 'Energy Star', 'tech clean'],
+        },
       ],
       gaps: [
-        'Could have checked for understanding more frequently',
+        {
+          text: 'Could have checked for understanding more frequently',
+          citations: ['make sense', 'does that make sense'],
+        },
       ],
       keyQuote: "I'm not interested on the gas... I would be interested on the heat pump. Maybe these two.",
     },
@@ -205,14 +281,32 @@ const STAGE_DEFINITIONS = [
     status: 'missed',
     analysis: {
       strengths: [
-        'Tied maintenance to concrete benefit (warranty matching)',
+        {
+          text: 'Tied maintenance to concrete benefit (warranty matching)',
+          citations: ['maintenance program', 'match the manufacturer warranties', '10 years parts'],
+        },
       ],
       gaps: [
-        'Only mentioned maintenance plan ONCE, briefly',
-        'No explanation of what the plan includes',
-        'No pricing presented',
-        'No follow-up or soft close on this offer',
-        'Missed opportunity given customer\'s reliability concerns',
+        {
+          text: 'Only mentioned maintenance plan ONCE, briefly',
+          citations: ['maintenance program'],
+        },
+        {
+          text: 'No explanation of what the plan includes',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'No pricing presented for maintenance plan',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'No follow-up or soft close on this offer',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'Missed opportunity given customer\'s reliability concerns',
+          citations: ['reliable', 'last long', 'worry'],
+        },
       ],
       keyQuote: "If you're on this maintenance program with us, we actually completely match the manufacturer warranties. It's essentially 10 years parts and 10 year manufacturer warranty.",
     },
@@ -228,22 +322,75 @@ const STAGE_DEFINITIONS = [
     status: 'partial',
     analysis: {
       strengths: [
-        'Secured $1,000 commitment',
-        'Reduced options from 4 to 2 for clarity',
-        'Referenced 3-day right to cancel as reassurance',
-        'Promised to send cleaned-up estimates via email',
+        {
+          text: 'Secured $1,000 commitment',
+          citations: ['1000', 'thousand', 'deposit'],
+        },
+        {
+          text: 'Reduced options from 4 to 2 for clarity',
+          citations: ['these two', 'narrow it down'],
+        },
+        {
+          text: 'Referenced 3-day right to cancel as reassurance',
+          citations: ['three day', 'cancel', 'right to cancel'],
+        },
+        {
+          text: 'Promised to send cleaned-up estimates via email',
+          citations: ['send', 'email', 'cleaned up'],
+        },
       ],
       gaps: [
-        'Persisted after customer initially said "no"',
-        'No formal thank you expressed',
-        'No clear follow-up timeline established',
-        "Didn't offer to include wife in follow-up call",
-        'Ending felt slightly pressured rather than gracious',
+        {
+          text: 'Persisted after customer initially said "no"',
+          citations: ['won\'t do that today', 'talk to her', 'make a decision'],
+        },
+        {
+          text: 'No formal thank you expressed',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: 'No clear follow-up timeline established',
+          citations: [], // No evidence - this is a gap
+        },
+        {
+          text: "Didn't offer to include wife in follow-up call",
+          citations: ['wife', 'talk to her'],
+        },
+        {
+          text: 'Ending felt slightly pressured rather than gracious',
+          citations: ['we can just do it today', 'won\'t do that today'],
+        },
       ],
       keyQuote: "No, we won't do that today. Just send me the, I'll talk to her and then we'll make a decision.",
     },
   },
 ];
+
+// Find sentences matching citation patterns
+export const findCitationMatches = (sentences, citations) => {
+  if (!citations || citations.length === 0 || !sentences) return [];
+  
+  const matches = [];
+  const seenIndices = new Set();
+  
+  sentences.forEach((sentence, idx) => {
+    const textLower = sentence.text.toLowerCase();
+    for (const citation of citations) {
+      if (textLower.includes(citation.toLowerCase()) && !seenIndices.has(idx)) {
+        matches.push({
+          sentenceIdx: idx,
+          sentence,
+          matchedPattern: citation,
+        });
+        seenIndices.add(idx);
+        break; // Only count each sentence once
+      }
+    }
+  });
+  
+  // Sort by sentence index (chronological order)
+  return matches.sort((a, b) => a.sentenceIdx - b.sentenceIdx);
+};
 
 // Generate CALL_STAGES with actual timestamps from sentences data
 export const generateCallStages = (sentences) => {

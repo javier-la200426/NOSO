@@ -775,6 +775,231 @@
   color: var(--text-primary);
 }
 
+/* ============================================
+   CITATION SYSTEM STYLES
+   ============================================ */
+
+/* Section header right side container */
+.section-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Citation indicator in transcript header */
+.citation-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--accent-teal);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  animation: citationSlideIn 0.2s ease;
+}
+
+@keyframes citationSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.citation-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  font-family: var(--font-mono);
+}
+
+.citation-nav-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.citation-nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.citation-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.citation-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.15s ease;
+  margin-left: var(--space-1);
+}
+
+.citation-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Citation button in analysis items */
+.citation-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+  margin-left: var(--space-2);
+  flex-shrink: 0;
+}
+
+.citation-btn:hover {
+  background: var(--accent-teal);
+  border-color: var(--accent-teal);
+  color: white;
+  transform: scale(1.05);
+}
+
+.citation-btn.active {
+  background: var(--accent-teal);
+  border-color: var(--accent-teal);
+  color: white;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.3);
+}
+
+.citation-btn.no-matches {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.citation-btn.no-matches:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+  transform: none;
+}
+
+.citation-icon {
+  font-size: 0.75rem;
+}
+
+.citation-match-count {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* No citation badge for gaps that are identified by absence */
+.no-citation-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  margin-left: var(--space-2);
+  cursor: help;
+}
+
+/* Analysis list item with citation */
+.analysis-list li {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.analysis-item-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.analysis-list li.citation-active-item {
+  background: rgba(13, 148, 136, 0.1);
+  border-radius: var(--radius-sm);
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+  margin-top: -2px;
+  margin-bottom: calc(var(--space-2) - 2px);
+}
+
+/* Transcript sentence highlighting */
+.transcript-sentence.citation-highlighted {
+  background: rgba(13, 148, 136, 0.08);
+  border-left: 3px solid var(--accent-teal);
+  position: relative;
+}
+
+.transcript-sentence.citation-current {
+  background: rgba(13, 148, 136, 0.18);
+  border-left: 4px solid var(--accent-teal);
+  box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.3);
+  animation: citationPulse 0.5s ease;
+}
+
+@keyframes citationPulse {
+  0% {
+    box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 1px rgba(13, 148, 136, 0.3);
+  }
+}
+
+/* Citation badge on highlighted sentence */
+.citation-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  animation: citationBadgeBounce 0.3s ease;
+}
+
+@keyframes citationBadgeBounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   END CITATION SYSTEM STYLES
+   ============================================ */
+
 /* Responsive */
 @media (max-width: 640px) {
   .header-meta {
@@ -797,5 +1022,19 @@
   
   .stage-btn {
     white-space: nowrap;
+  }
+  
+  /* Citation responsive adjustments */
+  .citation-indicator {
+    padding: var(--space-1) var(--space-2);
+  }
+  
+  .citation-btn {
+    padding: 2px 6px;
+  }
+  
+  .section-header-right {
+    flex-wrap: wrap;
+    gap: var(--space-2);
   }
 }

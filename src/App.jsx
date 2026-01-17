@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import './App.css';
 import logoNoso from './assets/LogoNoso.jpeg';
 import {
@@ -8,7 +8,7 @@ import {
   countKeywords,
   generateCallStages,
   groupSentencesByStage,
-  getConfidenceLevel,
+  findCitationMatches,
   KEYWORDS,
   CALL_ASSESSMENT,
 } from './utils/dataAnalysis';
@@ -18,6 +18,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [activeStage, setActiveStage] = useState('introduction');
   const [activeSentence, setActiveSentence] = useState(null);
+  
+  // Citation navigation state
+  const [activeCitations, setActiveCitations] = useState(null); // { matches: [], currentIndex: 0, itemText: '' }
+  const transcriptContainerRef = useRef(null);
+  const sentenceRefs = useRef({});
 
   // Load transcript data
   useEffect(() => {
@@ -57,6 +62,104 @@ function App() {
     });
     return result;
   };
+
+  // Handle citation button click - only search within current stage's sentences
+  const handleCitationClick = useCallback((citations, itemText) => {
+    const stageSentences = stageGroups[activeStage]?.sentences || [];
+    
+    // Find matches within stage sentences, but track global indices for highlighting
+    const matches = [];
+    const seenIndices = new Set();
+    
+    stageSentences.forEach((sentence) => {
+      const textLower = sentence.text.toLowerCase();
+      for (const citation of citations) {
+        if (textLower.includes(citation.toLowerCase()) && !seenIndices.has(sentence.start)) {
+          // Find global index by matching start time and text
+          const globalIdx = sentences.findIndex(s => s.start === sentence.start && s.text === sentence.text);
+          if (globalIdx !== -1) {
+            matches.push({
+              sentenceIdx: globalIdx,
+              sentence,
+              matchedPattern: citation,
+            });
+            seenIndices.add(sentence.start);
+          }
+          break;
+        }
+      }
+    });
+    
+    // Sort by sentence index (chronological order)
+    matches.sort((a, b) => a.sentenceIdx - b.sentenceIdx);
+    
+    if (matches.length === 0) {
+      // No matches found
+      setActiveCitations(null);
+      return;
+    }
+    
+    setActiveCitations({
+      matches,
+      currentIndex: 0,
+      itemText,
+    });
+  }, [sentences, stageGroups, activeStage]);
+
+  // Navigate between citations
+  const navigateCitation = useCallback((direction) => {
+    if (!activeCitations) return;
+    
+    const newIndex = direction === 'next'
+      ? (activeCitations.currentIndex + 1) % activeCitations.matches.length
+      : (activeCitations.currentIndex - 1 + activeCitations.matches.length) % activeCitations.matches.length;
+    
+    setActiveCitations(prev => ({
+      ...prev,
+      currentIndex: newIndex,
+    }));
+  }, [activeCitations]);
+
+  // Close citations
+  const closeCitations = useCallback(() => {
+    setActiveCitations(null);
+  }, []);
+
+  // Auto-scroll to highlighted sentence
+  useEffect(() => {
+    if (activeCitations && activeCitations.matches.length > 0) {
+      const currentMatch = activeCitations.matches[activeCitations.currentIndex];
+      const sentenceEl = sentenceRefs.current[currentMatch.sentenceIdx];
+      
+      if (sentenceEl && transcriptContainerRef.current) {
+        sentenceEl.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }
+  }, [activeCitations]);
+
+  // Check if a sentence is currently highlighted as a citation
+  const isSentenceHighlighted = useCallback((globalSentenceIdx) => {
+    if (!activeCitations) return false;
+    return activeCitations.matches.some(m => m.sentenceIdx === globalSentenceIdx);
+  }, [activeCitations]);
+
+  // Check if a sentence is the current (focused) citation
+  const isSentenceCurrent = useCallback((globalSentenceIdx) => {
+    if (!activeCitations) return false;
+    const currentMatch = activeCitations.matches[activeCitations.currentIndex];
+    return currentMatch && currentMatch.sentenceIdx === globalSentenceIdx;
+  }, [activeCitations]);
+
+  // Get global sentence index from stage sentences
+  const getGlobalSentenceIndex = useCallback((localIdx) => {
+    const stageSentences = stageGroups[activeStage]?.sentences || [];
+    if (localIdx >= stageSentences.length) return -1;
+    const sentence = stageSentences[localIdx];
+    return sentences.findIndex(s => s.start === sentence.start && s.text === sentence.text);
+  }, [sentences, stageGroups, activeStage]);
 
   if (loading) {
     return (
@@ -188,18 +291,56 @@ function App() {
               <h3 className="section-title">
                 📝 Transcript — {currentStage?.name}
               </h3>
-              <span className="badge badge-teal">
-                {stageGroups[activeStage]?.sentences.length} sentences
-              </span>
+              <div className="section-header-right">
+                {activeCitations && (
+                  <div className="citation-indicator">
+                    <span className="citation-count">
+                      {activeCitations.currentIndex + 1} / {activeCitations.matches.length}
+                    </span>
+                    <button 
+                      className="citation-nav-btn"
+                      onClick={() => navigateCitation('prev')}
+                      disabled={activeCitations.matches.length <= 1}
+                      title="Previous quote"
+                    >
+                      ←
+                    </button>
+                    <button 
+                      className="citation-nav-btn"
+                      onClick={() => navigateCitation('next')}
+                      disabled={activeCitations.matches.length <= 1}
+                      title="Next quote"
+                    >
+                      →
+                    </button>
+                    <button 
+                      className="citation-close-btn"
+                      onClick={closeCitations}
+                      title="Close citations"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+                <span className="badge badge-teal">
+                  {stageGroups[activeStage]?.sentences.length} sentences
+                </span>
+              </div>
             </div>
-            <div className="transcript-container">
+            <div className="transcript-container" ref={transcriptContainerRef}>
               {stageGroups[activeStage]?.sentences.map((sentence, idx) => {
-                const conf = getConfidenceLevel(sentence.confidence);
+                const globalIdx = getGlobalSentenceIndex(idx);
+                const isHighlighted = isSentenceHighlighted(globalIdx);
+                const isCurrent = isSentenceCurrent(globalIdx);
+                
                 return (
                   <div
                     key={idx}
+                    ref={(el) => { sentenceRefs.current[globalIdx] = el; }}
                     className={`transcript-sentence ${
                       activeSentence === idx ? 'active' : ''
+                    } ${isHighlighted ? 'citation-highlighted' : ''} ${
+                      isCurrent ? 'citation-current' : ''
                     }`}
                     onClick={() => setActiveSentence(idx)}
                   >
@@ -219,6 +360,11 @@ function App() {
                         }}
                       />
                     </div>
+                    {isHighlighted && (
+                      <div className="citation-badge">
+                        📌
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -256,9 +402,29 @@ function App() {
                     ✅ Strengths
                   </h5>
                   <ul className="analysis-list strengths">
-                    {currentStage?.analysis.strengths.map((item, idx) => (
-                      <li key={idx}>{item}</li>
-                    ))}
+                    {currentStage?.analysis.strengths.map((item, idx) => {
+                      const itemData = typeof item === 'string' ? { text: item, citations: [] } : item;
+                      // Only count matches within the current stage's sentences
+                      const stageSentences = stageGroups[activeStage]?.sentences || [];
+                      const matchCount = findCitationMatches(stageSentences, itemData.citations).length;
+                      const isActive = activeCitations?.itemText === itemData.text;
+                      
+                      return (
+                        <li key={idx} className={isActive ? 'citation-active-item' : ''}>
+                          <span className="analysis-item-text">{itemData.text}</span>
+                          {itemData.citations.length > 0 && (
+                            <button
+                              className={`citation-btn ${isActive ? 'active' : ''} ${matchCount === 0 ? 'no-matches' : ''}`}
+                              onClick={() => handleCitationClick(itemData.citations, itemData.text)}
+                              title={matchCount > 0 ? `Show ${matchCount} supporting quote(s)` : 'No matching quotes found in this stage'}
+                            >
+                              <span className="citation-icon">📍</span>
+                              <span className="citation-match-count">{matchCount}</span>
+                            </button>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
@@ -267,9 +433,35 @@ function App() {
                     ⚠️ Areas for Improvement
                   </h5>
                   <ul className="analysis-list gaps">
-                    {currentStage?.analysis.gaps.map((item, idx) => (
-                      <li key={idx}>{item}</li>
-                    ))}
+                    {currentStage?.analysis.gaps.map((item, idx) => {
+                      const itemData = typeof item === 'string' ? { text: item, citations: [] } : item;
+                      // Only count matches within the current stage's sentences
+                      const stageSentences = stageGroups[activeStage]?.sentences || [];
+                      const matchCount = findCitationMatches(stageSentences, itemData.citations).length;
+                      const isActive = activeCitations?.itemText === itemData.text;
+                      const hasNoCitations = itemData.citations.length === 0;
+                      
+                      return (
+                        <li key={idx} className={isActive ? 'citation-active-item' : ''}>
+                          <span className="analysis-item-text">{itemData.text}</span>
+                          {!hasNoCitations && (
+                            <button
+                              className={`citation-btn ${isActive ? 'active' : ''} ${matchCount === 0 ? 'no-matches' : ''}`}
+                              onClick={() => handleCitationClick(itemData.citations, itemData.text)}
+                              title={matchCount > 0 ? `Show ${matchCount} supporting quote(s)` : 'No matching quotes found in this stage'}
+                            >
+                              <span className="citation-icon">📍</span>
+                              <span className="citation-match-count">{matchCount}</span>
+                            </button>
+                          )}
+                          {hasNoCitations && (
+                            <span className="no-citation-badge" title="Gap identified by absence of evidence">
+                              —
+                            </span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
