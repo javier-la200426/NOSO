@@ -172,7 +172,7 @@ function App() {
     setActiveCitations(null);
   }, []);
 
-  // Auto-scroll to highlighted sentence (skip on initial page load)
+  // Auto-scroll to highlighted sentence within transcript container only (skip on initial page load)
   useEffect(() => {
     if (activeCitations && activeCitations.matches.length > 0) {
       // Skip scrolling on initial page load
@@ -183,11 +183,19 @@ function App() {
       
       const currentMatch = activeCitations.matches[activeCitations.currentIndex];
       const sentenceEl = sentenceRefs.current[currentMatch.sentenceIdx];
+      const container = transcriptContainerRef.current;
       
-      if (sentenceEl && transcriptContainerRef.current) {
-        sentenceEl.scrollIntoView({
+      if (sentenceEl && container) {
+        // Calculate scroll position to center the element within the transcript container only
+        const containerRect = container.getBoundingClientRect();
+        const sentenceRect = sentenceEl.getBoundingClientRect();
+        
+        // Calculate the offset relative to the container's scroll position
+        const scrollTop = container.scrollTop + (sentenceRect.top - containerRect.top) - (containerRect.height / 2) + (sentenceRect.height / 2);
+        
+        container.scrollTo({
+          top: scrollTop,
           behavior: 'smooth',
-          block: 'center',
         });
       }
     }
