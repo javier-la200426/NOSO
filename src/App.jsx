@@ -180,68 +180,10 @@ function App() {
               NOSO Call Analysis
             </div>
           </div>
-          <div className="header-meta">
-            <div className="meta-item">
-              <span className="label">Score:</span>
-              <span className="value" style={{ color: '#10b981' }}>
-                {CALL_ASSESSMENT.overallScore}/10
-              </span>
-            </div>
-          </div>
         </div>
       </header>
 
       <main className="main-content">
-        {/* Stats Grid */}
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-label">📊 Total Sentences</div>
-            <div className="stat-value">{stats?.totalSentences}</div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-label">⏱️ Call Duration</div>
-            <div className="stat-value">
-              {formatMinutes(stats?.callDuration)}
-              <span className="stat-unit">min</span>
-            </div>
-          </div>
-
-          <div className="stat-card">
-            <div className="stat-label">🎯 Transcription Quality</div>
-            <div
-              className="stat-value has-tooltip"
-              data-tooltip="Average of all sentence confidence scores (0.0-1.0) from AssemblyAI, showing how sure the model is that the transcript is correct. Above 85% is high accuracy."
-            >
-              {stats?.avgConfidence}%
-            </div>
-          </div>
-
-          <div className="stat-card talk-time-card">
-            <div className="stat-label">🗣️ Talk Time Distribution</div>
-            <div className="talk-time-bar">
-              <div
-                className="talk-time-segment speaker-a"
-                style={{ width: `${stats?.speakerAPercent}%` }}
-              />
-              <div
-                className="talk-time-segment speaker-b"
-                style={{ width: `${stats?.speakerBPercent}%` }}
-              />
-            </div>
-            <div className="talk-time-legend">
-              <div className="legend-item">
-                <div className="legend-dot speaker-a" />
-                <span>Customer (Luis): {stats?.speakerAPercent}%</span>
-              </div>
-              <div className="legend-item">
-                <div className="legend-dot speaker-b" />
-                <span>Technician: {stats?.speakerBPercent}%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Overall Assessment Section */}
         <section className="summary-section">
           <div className="summary-header">
@@ -259,115 +201,113 @@ function App() {
             </div>
           </div>
 
-          {/* Call Context */}
-          <div className="call-context-grid" style={{ marginTop: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
-            <div className="context-card">
-              <h4>🔧 Prior Visit</h4>
-              <p>{CALL_ASSESSMENT.callContext.priorVisit}</p>
-              <div className="context-detail">
-                <span>Repair Cost:</span> <strong>{CALL_ASSESSMENT.callContext.repairCost}</strong>
+          {/* Assessment Layout - Context on left, Scores on right */}
+          <div className="assessment-layout">
+            {/* Left column - Context cards 2x2 */}
+            <div className="call-context-grid">
+              <div className="context-card">
+                <h4>🔧 Prior Visit</h4>
+                <p>{CALL_ASSESSMENT.callContext.priorVisit}</p>
+                <div className="context-detail">
+                  <span>Repair Cost:</span> <strong>{CALL_ASSESSMENT.callContext.repairCost}</strong>
+                </div>
+                <div className="context-detail">
+                  <span>Customer Concern:</span> <strong>{CALL_ASSESSMENT.callContext.customerConcern}</strong>
+                </div>
               </div>
-              <div className="context-detail">
-                <span>Customer Concern:</span> <strong>{CALL_ASSESSMENT.callContext.customerConcern}</strong>
+              <div className="context-card">
+                <h4>🏷️ Options Presented</h4>
+                <ul className="options-list">
+                  {CALL_ASSESSMENT.optionsPresented.map((opt, idx) => (
+                    <li key={idx} className={opt.status.includes('finalist') ? 'finalist' : opt.status.includes('rejected') ? 'rejected' : ''}>
+                      <strong>{opt.name}</strong>
+                      <span className="option-status">{opt.status}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="context-card">
+                <h4>💰 Rebates Explained</h4>
+                <ul className="rebates-list">
+                  <li><span>Copper line reuse:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.copperLineReuse}</strong></li>
+                  <li><span>SVCE:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.svce}</strong></li>
+                  <li><span>TECH:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.tech}</strong></li>
+                  <li><span>Energy Star:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.energyStar}</strong></li>
+                  <li><span>Duct sealing:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.ductSealingPromo}</strong></li>
+                </ul>
+              </div>
+              <div className="context-card highlight">
+                <h4>🤝 Closing Structure</h4>
+                <div className="closing-detail">
+                  <span>Deposit Collected:</span> <strong style={{ color: 'var(--color-success)' }}>{CALL_ASSESSMENT.closingStructure.deposit}</strong>
+                </div>
+                <div className="closing-detail">
+                  <span>Repair Waived:</span> <strong>{CALL_ASSESSMENT.closingStructure.repairWaived}</strong>
+                </div>
+                <div className="closing-detail">
+                  <span>Cancel Window:</span> <strong>{CALL_ASSESSMENT.closingStructure.cancellationWindow}</strong>
+                </div>
+                <div className="closing-detail">
+                  <span>Estimates Sent:</span> <strong>{CALL_ASSESSMENT.closingStructure.estimatesSent}</strong>
+                </div>
               </div>
             </div>
-            <div className="context-card">
-              <h4>🏷️ Options Presented</h4>
-              <ul className="options-list">
-                {CALL_ASSESSMENT.optionsPresented.map((opt, idx) => (
-                  <li key={idx} className={opt.status.includes('finalist') ? 'finalist' : opt.status.includes('rejected') ? 'rejected' : ''}>
-                    <strong>{opt.name}</strong>
-                    <span className="option-status">{opt.status}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="context-card">
-              <h4>💰 Rebates Explained</h4>
-              <ul className="rebates-list">
-                <li><span>Copper line reuse:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.copperLineReuse}</strong></li>
-                <li><span>SVCE:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.svce}</strong></li>
-                <li><span>TECH:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.tech}</strong></li>
-                <li><span>Energy Star:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.energyStar}</strong></li>
-                <li><span>Duct sealing:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.ductSealingPromo}</strong></li>
-              </ul>
-            </div>
-            <div className="context-card highlight">
-              <h4>🤝 Closing Structure</h4>
-              <div className="closing-detail">
-                <span>Deposit Collected:</span> <strong style={{ color: 'var(--color-success)' }}>{CALL_ASSESSMENT.closingStructure.deposit}</strong>
-              </div>
-              <div className="closing-detail">
-                <span>Repair Waived:</span> <strong>{CALL_ASSESSMENT.closingStructure.repairWaived}</strong>
-              </div>
-              <div className="closing-detail">
-                <span>Cancel Window:</span> <strong>{CALL_ASSESSMENT.closingStructure.cancellationWindow}</strong>
-              </div>
-              <div className="closing-detail">
-                <span>Estimates Sent:</span> <strong>{CALL_ASSESSMENT.closingStructure.estimatesSent}</strong>
-              </div>
+
+            {/* Right column - Scorecard */}
+            <div className="scorecard">
+              {callStages.map((stage) => (
+                <div key={stage.id} className={`scorecard-item ${stage.status}`}>
+                  <span className="scorecard-icon">{stage.icon}</span>
+                  <div className="scorecard-info">
+                    <div className="scorecard-name">{stage.name}</div>
+                    <div className="scorecard-score">{stage.score}/10</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Scorecard */}
-          <div className="scorecard">
-            {callStages.map((stage) => (
-              <div key={stage.id} className={`scorecard-item ${stage.status}`}>
-                <span className="scorecard-icon">{stage.icon}</span>
-                <div className="scorecard-info">
-                  <div className="scorecard-name">{stage.name}</div>
-                  <div className="scorecard-score">{stage.score}/10</div>
-                </div>
+          {/* Stats Strip */}
+          <div className="stats-strip">
+            <div className="stat-pill-group">
+              <span className="stat-pill">📊 {stats?.totalSentences} sentences</span>
+              <span className="stat-pill">⏱️ {formatMinutes(stats?.callDuration)}min</span>
+              <span
+                className="stat-pill has-tooltip"
+                data-tooltip="Average of all sentence confidence scores (0.0-1.0) from AssemblyAI, showing how sure the model is that the transcript is correct. Above 85% is high accuracy."
+              >
+                🎯 {stats?.avgConfidence}% quality
+              </span>
+            </div>
+            <div className="talk-time-compact">
+              <span className="talk-time-label">🗣️ Talk Time:</span>
+              <div className="talk-time-bar-compact">
+                <div
+                  className="talk-time-segment speaker-a"
+                  style={{ width: `${stats?.speakerAPercent}%` }}
+                />
+                <div
+                  className="talk-time-segment speaker-b"
+                  style={{ width: `${stats?.speakerBPercent}%` }}
+                />
               </div>
-            ))}
+              <span className="talk-time-values">
+                <span className="speaker-a-text">Luis {stats?.speakerAPercent}%</span>
+                <span className="speaker-b-text">Tech {stats?.speakerBPercent}%</span>
+              </span>
+            </div>
           </div>
 
-          {/* Key Outcomes Visual */}
-          <div className="outcomes-container" style={{ marginTop: 'var(--space-4)' }}>
-            <h4 className="chart-title">🎯 Key Call Outcomes</h4>
-            <div className="outcomes-grid">
-              <div className="outcome-card win">
-                <div className="outcome-icon">✓</div>
-                <div className="outcome-content">
-                  <div className="outcome-label">Deposit Secured</div>
-                  <div className="outcome-value">$1,000</div>
-                </div>
-              </div>
-              <div className="outcome-card win">
-                <div className="outcome-icon">✓</div>
-                <div className="outcome-content">
-                  <div className="outcome-label">Options Narrowed</div>
-                  <div className="outcome-value">4 → 2</div>
-                </div>
-              </div>
-              <div className="outcome-card win">
-                <div className="outcome-icon">✓</div>
-                <div className="outcome-content">
-                  <div className="outcome-label">Rebates Explained</div>
-                  <div className="outcome-value">$5,800+</div>
-                </div>
-              </div>
-              <div className="outcome-card win">
-                <div className="outcome-icon">✓</div>
-                <div className="outcome-content">
-                  <div className="outcome-label">Repair Waived</div>
-                  <div className="outcome-value">$1,900</div>
-                </div>
-              </div>
-              <div className="outcome-card miss">
-                <div className="outcome-icon">✗</div>
-                <div className="outcome-content">
-                  <div className="outcome-label">Maintenance Plan</div>
-                  <div className="outcome-value">Not Pitched</div>
-                </div>
-              </div>
-              <div className="outcome-card miss">
-                <div className="outcome-icon">✗</div>
-                <div className="outcome-content">
-                  <div className="outcome-label">Referral Ask</div>
-                  <div className="outcome-value">Missed</div>
-                </div>
-              </div>
+          {/* Outcomes Strip */}
+          <div className="outcomes-strip">
+            <span className="strip-label">Outcomes:</span>
+            <div className="outcome-badges">
+              <span className="outcome-badge win">✓ Deposit $1,000</span>
+              <span className="outcome-badge win">✓ Narrowed 4→2</span>
+              <span className="outcome-badge win">✓ Rebates $5,800+</span>
+              <span className="outcome-badge win">✓ Waived $1,900</span>
+              <span className="outcome-badge miss">✗ No Maintenance Plan</span>
+              <span className="outcome-badge miss">✗ No Referral Ask</span>
             </div>
           </div>
         </section>
