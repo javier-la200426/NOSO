@@ -200,7 +200,7 @@ function App() {
                     key={idx}
                     className={`transcript-sentence ${
                       activeSentence === idx ? 'active' : ''
-                    } ${sentence.confidence < 0.7 ? 'low-confidence' : ''}`}
+                    }`}
                     onClick={() => setActiveSentence(idx)}
                   >
                     <div className="sentence-time">
@@ -218,14 +218,6 @@ function App() {
                           __html: highlightKeywords(sentence.text),
                         }}
                       />
-                      {sentence.confidence < 0.8 && (
-                        <div
-                          className="confidence-indicator"
-                          style={{ color: conf.color }}
-                        >
-                          ⚠️ {(sentence.confidence * 100).toFixed(0)}% confidence
-                        </div>
-                      )}
                     </div>
                   </div>
                 );
