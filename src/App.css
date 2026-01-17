@@ -258,6 +258,11 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-6);
   margin-bottom: var(--space-8);
+  align-items: stretch;
+}
+
+.two-column > .section {
+  max-height: 700px;
 }
 
 @media (max-width: 1024px) {
@@ -272,6 +277,8 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .section-header {
@@ -293,6 +300,8 @@
 
 .section-body {
   padding: var(--space-5);
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* Stage Navigation */
@@ -400,7 +409,8 @@
 
 /* Transcript */
 .transcript-container {
-  max-height: 600px;
+  flex: 1;
+  min-height: 400px;
   overflow-y: auto;
 }
 
