@@ -163,6 +163,32 @@ function App() {
           ))}
         </nav>
 
+        {/* Timeline Progress Bar */}
+        <div className="timeline-container">
+          <div className="timeline-bar">
+            {callStages.map((stage) => (
+              <div
+                key={stage.id}
+                className={`timeline-segment ${activeStage === stage.id ? 'active' : ''}`}
+                style={{
+                  width: `${stage.endPercent - stage.startPercent}%`,
+                  left: `${stage.startPercent}%`,
+                }}
+                onClick={() => setActiveStage(stage.id)}
+              >
+                <div className="timeline-segment-fill" />
+              </div>
+            ))}
+          </div>
+          <div className="timeline-label">
+            <span>0%</span>
+            <span className="timeline-current">
+              {currentStage?.startPercent.toFixed(1)}% - {currentStage?.endPercent.toFixed(1)}%
+            </span>
+            <span>100%</span>
+          </div>
+        </div>
+
         {/* Two Column Layout */}
         <div className="two-column">
           {/* Transcript Panel */}

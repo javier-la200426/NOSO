@@ -334,6 +334,64 @@
   opacity: 0.8;
 }
 
+/* Timeline Progress Bar */
+.timeline-container {
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.timeline-bar {
+  position: relative;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+}
+
+.timeline-segment {
+  position: absolute;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timeline-segment-fill {
+  width: 100%;
+  height: 100%;
+  background: var(--border-default);
+  opacity: 0.4;
+  transition: all 0.2s ease;
+}
+
+.timeline-segment:hover .timeline-segment-fill {
+  opacity: 0.6;
+}
+
+.timeline-segment.active .timeline-segment-fill {
+  background: var(--header-bg);
+  opacity: 1;
+}
+
+.timeline-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.timeline-current {
+  font-weight: 600;
+  color: var(--header-bg);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
 /* Transcript */
 .transcript-container {
   max-height: 600px;
