@@ -349,9 +349,6 @@ function App() {
                   <span>Repair Payment:</span> <strong>{CALL_ASSESSMENT.callContext.repairPayment}</strong>
                 </div>
                 <div className="context-detail">
-                  <span>Commitment:</span> <strong style={{color: '#dc2626'}}>None (declined)</strong>
-                </div>
-                <div className="context-detail">
                   <span>Customer Concern:</span> <strong>{CALL_ASSESSMENT.callContext.customerConcern}</strong>
                 </div>
               </div>
@@ -448,7 +445,7 @@ function App() {
               <span className="outcome-badge win">✓ Repair Paid ~$1,009</span>
               <span className="outcome-badge miss">✗ No Commitment</span>
               <span className="outcome-badge miss">✗ No Deposit</span>
-              <span className="outcome-badge miss">✗ No Maintenance Plan</span>
+              <span className="outcome-badge miss">✗ Maintenance Plan mentioned briefly</span>
             </div>
           </div>
         </section>
