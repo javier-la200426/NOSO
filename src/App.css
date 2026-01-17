@@ -408,19 +408,9 @@
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   margin-bottom: var(--space-2);
-  cursor: pointer;
   transition: all 0.15s ease;
   display: flex;
   gap: var(--space-3);
-}
-
-.transcript-sentence:hover {
-  background: var(--bg-hover);
-}
-
-.transcript-sentence.active {
-  background: var(--bg-active);
-  border-left: 3px solid var(--accent-teal);
 }
 
 .transcript-sentence.low-confidence {
@@ -1140,6 +1130,27 @@
 .analysis-item-text {
   flex: 1;
   min-width: 0;
+}
+
+/* Clickable analysis items */
+.analysis-list li.clickable {
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  border-radius: var(--radius-sm);
+  margin-left: calc(-1 * var(--space-2));
+  margin-right: calc(-1 * var(--space-2));
+  padding-left: calc(var(--space-5) + var(--space-2));
+  padding-right: var(--space-2);
+  padding-top: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+.analysis-list li.clickable:hover {
+  background: rgba(13, 148, 136, 0.08);
+}
+
+.analysis-list li.clickable:active {
+  transform: scale(0.99);
 }
 
 .analysis-list li.citation-active-item {
