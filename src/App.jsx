@@ -207,7 +207,9 @@ function App() {
             <div className="call-context-grid">
               <div className="context-card">
                 <h4>🔧 Prior Visit</h4>
-                <p>{CALL_ASSESSMENT.callContext.priorVisit}</p>
+                <div className="context-detail">
+                  <span>{CALL_ASSESSMENT.callContext.priorVisit}</span> <strong>{CALL_ASSESSMENT.callContext.priorVisitNote}</strong>
+                </div>
                 <div className="context-detail">
                   <span>Repair Cost:</span> <strong>{CALL_ASSESSMENT.callContext.repairCost}</strong>
                 </div>

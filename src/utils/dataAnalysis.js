@@ -467,7 +467,8 @@ export const CALL_ASSESSMENT = {
   overallScore: 7.8,
   summary: "Highly effective sales consultation following a diagnostic visit. Tech converted a $1,900 repair into a $1,000 deposit toward a ~$22k heat pump system. Customer's main concern (noise) was addressed with inverter technology and Bosch upward-venting option. Successfully secured commitment despite customer wanting to consult wife first.",
   callContext: {
-    priorVisit: 'Diagnostic + refrigerant recharge ("bandaid" fix)',
+    priorVisit: 'Diagnostic + refrigerant recharge:',
+    priorVisitNote: '"bandaid" fix',
     repairCost: '$1,900',
     depositCollected: '$1,000',
     repairWaived: true,
