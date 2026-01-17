@@ -51,6 +51,8 @@ function App() {
 
   // Track if initial auto-selection has been done
   const initialSelectionDone = useRef(false);
+  // Track if we should skip scrolling (for initial load)
+  const skipNextScroll = useRef(true);
   
   // Auto-select first strength on initial load
   useEffect(() => {
@@ -170,9 +172,15 @@ function App() {
     setActiveCitations(null);
   }, []);
 
-  // Auto-scroll to highlighted sentence
+  // Auto-scroll to highlighted sentence (skip on initial page load)
   useEffect(() => {
     if (activeCitations && activeCitations.matches.length > 0) {
+      // Skip scrolling on initial page load
+      if (skipNextScroll.current) {
+        skipNextScroll.current = false;
+        return;
+      }
+      
       const currentMatch = activeCitations.matches[activeCitations.currentIndex];
       const sentenceEl = sentenceRefs.current[currentMatch.sentenceIdx];
       
