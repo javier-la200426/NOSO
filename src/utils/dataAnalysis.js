@@ -317,7 +317,7 @@ const STAGE_DEFINITIONS = [
       ],
       gaps: [
         {
-          text: 'Maintenance plan NOT discussed in this section (only briefly mentioned earlier at 28%)',
+          text: 'Maintenance plan NOT discussed in this section (only briefly mentioned earlier at time 9:17)',
           citations: [], // Key finding - maintenance was skipped
         },
         {
@@ -344,7 +344,7 @@ const STAGE_DEFINITIONS = [
           citations: ['quieter and more efficient', 'not having gas leaks'],
         },
         {
-          text: 'Detailed financing breakdown (60mo @ 5.99%, 12mo no interest)',
+          text: 'Detailed financing breakdown',
           citations: ['60 months', '5 year', '12 payments', 'no interest'],
         },
         {
