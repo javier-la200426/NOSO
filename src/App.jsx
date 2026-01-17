@@ -242,6 +242,136 @@ function App() {
           </div>
         </div>
 
+        {/* Overall Assessment Section */}
+        <section className="summary-section">
+          <div className="summary-header">
+            <div>
+              <h2 style={{ marginBottom: 'var(--space-2)' }}>
+                📊 Overall Assessment
+              </h2>
+              <p>{CALL_ASSESSMENT.summary}</p>
+            </div>
+            <div className="summary-score">
+              <span className="summary-score-value">
+                {CALL_ASSESSMENT.overallScore}
+              </span>
+              <span className="summary-score-max">/10</span>
+            </div>
+          </div>
+
+          {/* Call Context */}
+          <div className="call-context-grid" style={{ marginTop: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
+            <div className="context-card">
+              <h4>🔧 Prior Visit</h4>
+              <p>{CALL_ASSESSMENT.callContext.priorVisit}</p>
+              <div className="context-detail">
+                <span>Repair Cost:</span> <strong>{CALL_ASSESSMENT.callContext.repairCost}</strong>
+              </div>
+              <div className="context-detail">
+                <span>Customer Concern:</span> <strong>{CALL_ASSESSMENT.callContext.customerConcern}</strong>
+              </div>
+            </div>
+            <div className="context-card">
+              <h4>🏷️ Options Presented</h4>
+              <ul className="options-list">
+                {CALL_ASSESSMENT.optionsPresented.map((opt, idx) => (
+                  <li key={idx} className={opt.status.includes('finalist') ? 'finalist' : opt.status.includes('rejected') ? 'rejected' : ''}>
+                    <strong>{opt.name}</strong>
+                    <span className="option-status">{opt.status}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="context-card">
+              <h4>💰 Rebates Explained</h4>
+              <ul className="rebates-list">
+                <li><span>Copper line reuse:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.copperLineReuse}</strong></li>
+                <li><span>SVCE:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.svce}</strong></li>
+                <li><span>TECH:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.tech}</strong></li>
+                <li><span>Energy Star:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.energyStar}</strong></li>
+                <li><span>Duct sealing:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.ductSealingPromo}</strong></li>
+              </ul>
+            </div>
+            <div className="context-card highlight">
+              <h4>🤝 Closing Structure</h4>
+              <div className="closing-detail">
+                <span>Deposit Collected:</span> <strong style={{ color: 'var(--color-success)' }}>{CALL_ASSESSMENT.closingStructure.deposit}</strong>
+              </div>
+              <div className="closing-detail">
+                <span>Repair Waived:</span> <strong>{CALL_ASSESSMENT.closingStructure.repairWaived}</strong>
+              </div>
+              <div className="closing-detail">
+                <span>Cancel Window:</span> <strong>{CALL_ASSESSMENT.closingStructure.cancellationWindow}</strong>
+              </div>
+              <div className="closing-detail">
+                <span>Estimates Sent:</span> <strong>{CALL_ASSESSMENT.closingStructure.estimatesSent}</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* Scorecard */}
+          <div className="scorecard">
+            {callStages.map((stage) => (
+              <div key={stage.id} className={`scorecard-item ${stage.status}`}>
+                <span className="scorecard-icon">{stage.icon}</span>
+                <div className="scorecard-info">
+                  <div className="scorecard-name">{stage.name}</div>
+                  <div className="scorecard-score">{stage.score}/10</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Key Outcomes Visual */}
+          <div className="outcomes-container" style={{ marginTop: 'var(--space-4)' }}>
+            <h4 className="chart-title">🎯 Key Call Outcomes</h4>
+            <div className="outcomes-grid">
+              <div className="outcome-card win">
+                <div className="outcome-icon">✓</div>
+                <div className="outcome-content">
+                  <div className="outcome-label">Deposit Secured</div>
+                  <div className="outcome-value">$1,000</div>
+                </div>
+              </div>
+              <div className="outcome-card win">
+                <div className="outcome-icon">✓</div>
+                <div className="outcome-content">
+                  <div className="outcome-label">Options Narrowed</div>
+                  <div className="outcome-value">4 → 2</div>
+                </div>
+              </div>
+              <div className="outcome-card win">
+                <div className="outcome-icon">✓</div>
+                <div className="outcome-content">
+                  <div className="outcome-label">Rebates Explained</div>
+                  <div className="outcome-value">$5,800+</div>
+                </div>
+              </div>
+              <div className="outcome-card win">
+                <div className="outcome-icon">✓</div>
+                <div className="outcome-content">
+                  <div className="outcome-label">Repair Waived</div>
+                  <div className="outcome-value">$1,900</div>
+                </div>
+              </div>
+              <div className="outcome-card miss">
+                <div className="outcome-icon">✗</div>
+                <div className="outcome-content">
+                  <div className="outcome-label">Maintenance Plan</div>
+                  <div className="outcome-value">Not Pitched</div>
+                </div>
+              </div>
+              <div className="outcome-card miss">
+                <div className="outcome-icon">✗</div>
+                <div className="outcome-content">
+                  <div className="outcome-label">Referral Ask</div>
+                  <div className="outcome-value">Missed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Stage Navigation */}
         <nav className="stage-nav">
           {callStages.map((stage) => (
@@ -508,132 +638,6 @@ function App() {
           </div>
         </section>
 
-        {/* Summary Section */}
-        <section className="summary-section">
-          <div className="summary-header">
-            <div>
-              <h2 style={{ marginBottom: 'var(--space-2)' }}>
-                📊 Overall Assessment
-              </h2>
-              <p>{CALL_ASSESSMENT.summary}</p>
-            </div>
-            <div className="summary-score">
-              <span className="summary-score-value">
-                {CALL_ASSESSMENT.overallScore}
-              </span>
-              <span className="summary-score-max">/10</span>
-            </div>
-          </div>
-
-          {/* Call Context */}
-          <div className="call-context-grid" style={{ marginTop: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
-            <div className="context-card">
-              <h4>🔧 Prior Visit</h4>
-              <p>{CALL_ASSESSMENT.callContext.priorVisit}</p>
-              <div className="context-detail">
-                <span>Repair Cost:</span> <strong>{CALL_ASSESSMENT.callContext.repairCost}</strong>
-              </div>
-              <div className="context-detail">
-                <span>Customer Concern:</span> <strong>{CALL_ASSESSMENT.callContext.customerConcern}</strong>
-              </div>
-            </div>
-            <div className="context-card">
-              <h4>🏷️ Options Presented</h4>
-              <ul className="options-list">
-                {CALL_ASSESSMENT.optionsPresented.map((opt, idx) => (
-                  <li key={idx} className={opt.status.includes('finalist') ? 'finalist' : opt.status.includes('rejected') ? 'rejected' : ''}>
-                    <strong>{opt.name}</strong>
-                    <span className="option-status">{opt.status}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="context-card">
-              <h4>💰 Rebates Explained</h4>
-              <ul className="rebates-list">
-                <li><span>Copper line reuse:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.copperLineReuse}</strong></li>
-                <li><span>SVCE:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.svce}</strong></li>
-                <li><span>TECH:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.tech}</strong></li>
-                <li><span>Energy Star:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.energyStar}</strong></li>
-                <li><span>Duct sealing:</span> <strong>{CALL_ASSESSMENT.rebatesExplained.ductSealingPromo}</strong></li>
-              </ul>
-            </div>
-            <div className="context-card highlight">
-              <h4>🤝 Closing Structure</h4>
-              <div className="closing-detail">
-                <span>Deposit Collected:</span> <strong style={{ color: 'var(--color-success)' }}>{CALL_ASSESSMENT.closingStructure.deposit}</strong>
-              </div>
-              <div className="closing-detail">
-                <span>Repair Waived:</span> <strong>{CALL_ASSESSMENT.closingStructure.repairWaived}</strong>
-              </div>
-              <div className="closing-detail">
-                <span>Cancel Window:</span> <strong>{CALL_ASSESSMENT.closingStructure.cancellationWindow}</strong>
-              </div>
-              <div className="closing-detail">
-                <span>Estimates Sent:</span> <strong>{CALL_ASSESSMENT.closingStructure.estimatesSent}</strong>
-              </div>
-            </div>
-          </div>
-
-          {/* Scorecard */}
-          <div className="scorecard">
-            {callStages.map((stage) => (
-              <div key={stage.id} className={`scorecard-item ${stage.status}`}>
-                <span className="scorecard-icon">{stage.icon}</span>
-                <div className="scorecard-info">
-                  <div className="scorecard-name">{stage.name}</div>
-                  <div className="scorecard-score">{stage.score}/10</div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="summary-content" style={{ marginTop: 'var(--space-6)' }}>
-            <div className="summary-block">
-              <h4 className="summary-block-title">
-                ✅ Sales Opportunities Taken
-              </h4>
-              <ul className="summary-list">
-                {CALL_ASSESSMENT.salesInsights.taken.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="summary-block">
-              <h4 className="summary-block-title">
-                ❌ Sales Opportunities Missed
-              </h4>
-              <ul className="summary-list">
-                {CALL_ASSESSMENT.salesInsights.missed.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="summary-block">
-              <h4 className="summary-block-title">
-                💪 Top Strengths
-              </h4>
-              <ul className="summary-list">
-                {CALL_ASSESSMENT.topStrengths.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="summary-block">
-              <h4 className="summary-block-title">
-                📈 Areas for Improvement
-              </h4>
-              <ul className="summary-list">
-                {CALL_ASSESSMENT.areasForImprovement.map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
       </main>
 
       {/* Footer */}
