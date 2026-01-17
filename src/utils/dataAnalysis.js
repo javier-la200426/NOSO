@@ -284,7 +284,7 @@ const STAGE_DEFINITIONS = [
           citations: [], // This is a gap - observation
         },
       ],
-      keyQuote: "I'm not interested on the gas... I would be interested on the heat pump. Maybe these two.",
+      keyQuote: "I can build a form of inverter that does do that... The brand is Bosch. Very highly reviewed from technicians... they're very reliable.",
     },
   },
   {
