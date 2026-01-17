@@ -1287,16 +1287,15 @@
   border-bottom: none;
 }
 
-.options-list li strong {
-  color: var(--color-text);
-  font-weight: 400;
+.options-list li span {
+  color: var(--color-text-muted);
 }
 
-.options-list li.finalist strong {
+.options-list li.finalist span {
   color: var(--color-success);
 }
 
-.options-list li.rejected strong {
+.options-list li.rejected span {
   color: var(--color-text-muted);
   text-decoration: line-through;
   opacity: 0.7;

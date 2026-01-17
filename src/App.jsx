@@ -291,7 +291,11 @@ function App() {
       <header className="header">
         <div className="header-content">
           <div className="header-left">
-            <div className="logo">
+            <div 
+              className="logo" 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={logoNoso} alt="NOSO Logo" className="logo-icon" />
               NOSO Call Analysis
             </div>
@@ -338,8 +342,8 @@ function App() {
                 <ul className="options-list">
                   {CALL_ASSESSMENT.optionsPresented.map((opt, idx) => (
                     <li key={idx} className={opt.status.includes('finalist') ? 'finalist' : opt.status.includes('rejected') ? 'rejected' : ''}>
-                      <strong>{opt.name}</strong>
-                      <span className="option-status">{opt.status}</span>
+                      <span>{opt.name}:</span>
+                      <strong className="option-status">{opt.status}</strong>
                     </li>
                   ))}
                 </ul>
