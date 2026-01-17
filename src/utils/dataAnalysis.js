@@ -130,6 +130,10 @@ const STAGE_DEFINITIONS = [
           text: 'Related personally to customer\'s work-from-home situation',
           citations: ['work from home', 'work from anywhere'],
         },
+        {
+          text: 'Shared specific temperature measurements from diagnosis',
+          citations: ['below freezing temperature at 41', '20 degree difference'],
+        },
       ],
       gaps: [
         {
@@ -155,10 +159,6 @@ const STAGE_DEFINITIONS = [
     status: 'good',
     analysis: {
       strengths: [
-        {
-          text: 'Shared specific temperature measurements',
-          citations: ['20 degree difference', 'below freezing', '41'],
-        },
         {
           text: 'Honest about repair being temporary',
           citations: ['Bandaid', 'Definitely'],
