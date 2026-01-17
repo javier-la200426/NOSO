@@ -240,7 +240,7 @@ const STAGE_DEFINITIONS = [
         },
         {
           text: 'Very lengthy explanation may be overwhelming',
-          citations: ['really lengthy section'],
+          citations: [], // Observation, not a specific quote
         },
         {
           text: 'Talk time heavily technician-dominated',
