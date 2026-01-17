@@ -306,6 +306,21 @@ function App() {
       <main className="main-content">
         {/* Overall Assessment Section */}
         <section className="summary-section">
+          {/* Call Type Identification Banner */}
+          <div className="call-type-banner">
+            <div className="call-type-header">
+              <span className="call-type-icon">📞</span>
+              <h3 className="call-type-title">Call Type Identification</h3>
+            </div>
+            <div className="call-type-content">
+              <div className="call-type-primary">
+                <span className="call-type-label">Type:</span>
+                <span className="call-type-value">{CALL_ASSESSMENT.callType.primary}</span>
+              </div>
+              <p className="call-type-description">{CALL_ASSESSMENT.callType.description}</p>
+            </div>
+          </div>
+
           <div className="summary-header">
             <div>
               <h2 style={{ marginBottom: 'var(--space-2)' }}>

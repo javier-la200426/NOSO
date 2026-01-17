@@ -463,7 +463,10 @@ export const getConfidenceLevel = (confidence) => {
 
 // Overall call assessment
 export const CALL_ASSESSMENT = {
-  callType: 'Post-Repair Sales Consultation',
+  callType: {
+    primary: 'Follow-up sales consultation after diagnostic/repair visit',
+    description: 'Originally a service call for HVAC issues (low efficiency, mold concerns), converted to equipment replacement consultation after diagnostic visit revealed system age and "bandaid" repair limitations.',
+  },
   overallScore: 7.8,
   summary: "Highly effective sales consultation following a diagnostic visit. Tech converted a $1,900 repair into a $1,000 deposit toward a ~$22k heat pump system. Customer's main concern (noise) was addressed with inverter technology and Bosch upward-venting option. Successfully secured commitment despite customer wanting to consult wife first.",
   callContext: {

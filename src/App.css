@@ -621,6 +621,79 @@
 }
 
 /* Summary Section */
+/* Call Type Identification Banner */
+.call-type-banner {
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.12) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.call-type-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.call-type-icon {
+  font-size: 1.25rem;
+}
+
+.call-type-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-teal);
+  margin: 0;
+}
+
+.call-type-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.call-type-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.call-type-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.call-type-value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.call-type-badge {
+  background: rgba(217, 119, 6, 0.15);
+  color: var(--accent-orange);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.call-type-description {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
 .summary-section {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
